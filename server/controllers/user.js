@@ -28,6 +28,7 @@ const registerUser = async (req, res) => {
       username: username,
       hash: hash,
       salt: salt,
+      balance: 0,
     });
 
     try {
