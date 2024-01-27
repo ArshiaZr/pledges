@@ -1,3 +1,5 @@
+const User = require("../models/user");
+
 const errorHandler = (error, request, response, next) => {
   console.log("errorHandler called");
   console.error(error.message);
@@ -16,6 +18,12 @@ const errorHandler = (error, request, response, next) => {
 
 const unkownEndpoint = (request, response) => {
   response.status(404).send({ error: "unknown endpoint" });
+};
+
+const setUser = (request, response) => {
+  //somehome get user id from request
+  const user = User.findById(id);
+  request.userId = user._id;
 };
 
 module.exports = {
