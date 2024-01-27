@@ -17,8 +17,8 @@ const createPledge = async (req, res) => {
     link,
     dateCreated: new Date(),
     dateUpdated: new Date(),
-    completed: False,
-    success: False,
+    completed: false,
+    success: false,
   });
 
   await pledge.save();
