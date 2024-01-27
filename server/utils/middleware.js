@@ -20,12 +20,6 @@ const unkownEndpoint = (request, response) => {
   response.status(404).send({ error: "unknown endpoint" });
 };
 
-const setUser = (request, response) => {
-  //somehome get user id from request
-  const user = User.findById(id);
-  request.userId = user._id;
-};
-
 module.exports = {
   errorHandler,
   unkownEndpoint,
