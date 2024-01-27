@@ -3,7 +3,7 @@ const Pledge = require("../models/pledge");
 const createPledge = async (req, res) => {
   const { title, details, amount, dateDue, location, repeat, priority, link } =
     req.body;
-  const userId = req.userId;
+  const userId = req.body._id;
 
   const pledge = new Pledge({
     user: userId,
@@ -26,7 +26,7 @@ const createPledge = async (req, res) => {
 };
 
 const getPledges = async (req, res) => {
-  const userId = req.userId;
+  const userId = req.body._id;
   const pledges = await Pledge.find({ user: userId });
   res.status(200).json(pledges);
 };
