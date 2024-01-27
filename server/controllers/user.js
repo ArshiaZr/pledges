@@ -59,11 +59,8 @@ const loginUser = async (req, res) => {
           token: tokenObject.token,
           expiresIn: tokenObject.expires,
           user: {
-            role: user.role,
-            enabled: user.enabled,
-            verified: user.verified,
-            image: user.image,
             username: user.username,
+            _id: user._id,
           },
         });
       } else {
