@@ -1,14 +1,17 @@
 const User = require("../models/user");
 
+const path = require("path");
+
 // Utils
 const isEmpty = require(path.join(__dirname, "../utils/isEmpty.js"));
-const { genPassword, validatePassword } = require(path.join(
+const { genPassword, validatePassword, issueJWT } = require(path.join(
   __dirname,
   "../utils/password.js"
 ));
 
 const registerUser = async (req, res) => {
   let { username, password } = req.body;
+
   // TODO: input validation
 
   username = username.toLowerCase();
@@ -48,6 +51,7 @@ const loginUser = async (req, res) => {
       }
 
       const isValid = validatePassword(password, user.hash, user.salt);
+
       if (isValid) {
         const tokenObject = issueJWT(user);
 

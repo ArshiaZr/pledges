@@ -1,10 +1,8 @@
 const express = require("express");
 const userRouter = express.Router();
-const userControllers = require("../controllers/pledge");
+const userControllers = require("../controllers/user");
 
-const path = require("path");
-
-userRouter.post("/register", pledgeControllers.createPledge);
-userRouter.get("/login", pledgeControllers.getPledges);
+userRouter.post("/register", userControllers.registerUser);
+userRouter.post("/login", userControllers.loginUser);
 
 module.exports = userRouter;

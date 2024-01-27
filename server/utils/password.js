@@ -107,8 +107,8 @@ function validateToken(token, rules) {
 }
 
 module.exports = {
-  createPledge,
-  getPledges,
-  editPledge,
-  deletePledge,
+  validatePassword,
+  genPassword,
+  issueJWT,
+  validateToken,
 };
