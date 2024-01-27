@@ -4,7 +4,7 @@ const pledgeControllers = require("../controllers/pledge");
 
 pledgeRouter.post("/", pledgeControllers.createPledge);
 pledgeRouter.get("/", pledgeControllers.getPledges);
-pledgeRouter.put("/", pledgeControllers.editPledge);
-pledgeRouter.delete("/", pledgeControllers.deletePledge);
+pledgeRouter.put("/:id", pledgeControllers.editPledge);
+pledgeRouter.delete("/:id", pledgeControllers.deletePledge);
 
 module.exports = pledgeRouter;
