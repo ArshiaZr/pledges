@@ -1,19 +1,13 @@
-import OngoingWidget from "../Components/OngoingWidget";
-import styles from "../styles/Home.module.scss";
+import HistoryWidget from "../../Components/HistoryWidget";
+import styles from "../../styles/History.module.scss";
 
-const ongoings = [{}];
-
-export default function Home() {
+export default function History() {
   return (
-    <main id={styles.home}>
-      <div className={styles.header}>
-        <div className={styles.localTime}>Friday, Sat Jan 27</div>
-        <button className={styles.singOutButton}>Sign Out</button>
-      </div>
+    <main id={styles.history}>
       <div className={styles.ongoingPledges}>
-        <div className={styles.title}>Ongoing Pledges</div>
+        <div className={styles.title}>History</div>
         <div className={styles.wrapper}>
-          <OngoingWidget
+          <HistoryWidget
             content={{
               title: "Zoom Meeting at 2 with Microsoft",
               detail:
@@ -27,7 +21,7 @@ export default function Home() {
 
             // key={0}
           />
-          <OngoingWidget
+          <HistoryWidget
             content={{
               title: "Zoom Meeting at 2 with Microsof",
               detail:

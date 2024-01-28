@@ -1,0 +1,220 @@
+.ongoingWidget {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  width: 22.5rem;
+  border-radius: 15px;
+  padding: 0.5rem;
+
+  background: var(--black);
+
+  .box {
+    border-radius: 15px;
+    background: var(--black1);
+    padding: 0.5rem;
+  }
+
+  .up,
+  .down {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+  }
+
+  .square {
+    aspect-ratio: 1 / 1;
+  }
+
+  .up {
+    .overviewWrapper {
+      width: 60%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      .titleDetialWrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+
+        .title {
+          color: var(--white1);
+          font-size: 0.9rem;
+          font-style: normal;
+          font-weight: 600;
+          line-height: normal;
+        }
+        .detail {
+          color: var(--gray);
+          font-size: 0.7rem;
+          font-style: normal;
+          font-weight: 400;
+          line-height: normal;
+        }
+      }
+
+      .date {
+        color: var(--gray);
+        font-size: 0.7rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+      }
+    }
+
+    .timeLeftWrapper {
+      width: 40%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .time {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        .title,
+        .clock {
+          color: var(--white1);
+          font-size: 1rem;
+          font-style: normal;
+          font-weight: 400;
+        }
+      }
+    }
+  }
+
+  .down {
+    .amountWrapper {
+      width: 20%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .amount {
+        color: #5fa9ff;
+        text-align: center;
+        font-size: 1.1rem;
+        font-style: normal;
+        font-weight: 600;
+      }
+    }
+
+    .locationWrapper {
+      width: 40%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      aspect-ratio: 127 / 62;
+
+      .locationText {
+        color: var(--gray);
+        font-size: 0.65rem;
+        line-height: 120%;
+        font-style: normal;
+        font-weight: 400;
+      }
+      .iconAndTitle {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 0.25rem;
+
+        color: var(--orange);
+        font-size: 0.6rem;
+        font-style: normal;
+        font-weight: 400;
+        .icon {
+          width: 0.5rem;
+          aspect-ratio: 1 / 1;
+          overflow: hidden;
+
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+          }
+        }
+      }
+    }
+
+    .linkWrapper {
+      width: 20%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+
+      gap: 0.5rem;
+
+      .icon {
+        width: 1.2rem;
+        aspect-ratio: 1 / 1;
+        overflow: hidden;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+        }
+      }
+
+      .title {
+        color: var(--gray);
+        font-size: 0.6rem;
+        font-style: normal;
+        font-weight: 400;
+      }
+    }
+
+    .priorityWrapper {
+      width: 20%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+
+      gap: 0.5rem;
+
+      .icon {
+        width: 1.2rem;
+        aspect-ratio: 1 / 1;
+        overflow: hidden;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+        }
+      }
+
+      .title {
+        color: var(--gray);
+        font-size: 0.6rem;
+        font-style: normal;
+        font-weight: 400;
+      }
+    }
+  }
+
+  .editButton {
+    position: absolute;
+    right: 0;
+    top: -2rem;
+    border: none;
+    background: #7a7a7a;
+    padding: 0.5rem 0.65rem;
+    border-radius: 25px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+  }
+}
