@@ -30,7 +30,9 @@ export default function OngoingWidget({ content }) {
         >
           <div className={styles.time}>
             <div className={styles.title}>Time Left</div>
-            <div className={styles.clock}>00:00</div>
+            <div className={styles.clock}>
+              {new Date(content.dateDue.toString()) - new Date()}
+            </div>
           </div>
         </div>
       </div>

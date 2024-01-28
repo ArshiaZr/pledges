@@ -28,6 +28,11 @@
   }
   .completePledgesWrapper {
     margin-top: 2rem;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+
     .completePledges {
       background: var(--blue);
       padding: 0.5rem 1rem;

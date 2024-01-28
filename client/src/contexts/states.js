@@ -11,6 +11,7 @@ export function AppStates({ children }) {
   const [editContent, setEditContent] = useState(false);
   const [allPledges, setAllPledges] = useState([]);
   const [currentLocation, setCurrentLocation] = useState([]);
+  const [balance, setBalance] = useState(0);
 
   const addAlert = ({ message, type, time }) => {
     let tmp = [...alerts];
@@ -38,8 +39,26 @@ export function AppStates({ children }) {
     }
   };
 
+  const getBalance = () => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      axios
+        .get("http://localhost:5001/user/balance", {
+          headers: { Authorization: `${token}` },
+        })
+        .then((res) => {
+          console.log(res.data.balance);
+          setBalance(res.data.balance);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
+
   useEffect(() => {
     getPledges();
+    getBalance();
   }, []);
 
   return (
@@ -59,6 +78,8 @@ export function AppStates({ children }) {
         getPledges,
         currentLocation,
         setCurrentLocation,
+        balance,
+        setBalance,
       }}
     >
       {children}

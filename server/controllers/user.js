@@ -83,7 +83,21 @@ const loginUser = async (req, res) => {
     });
 };
 
+const getBalance = async (req, res) => {
+  User.findOne({ _id: req._id })
+    .then((user) => {
+      if (isEmpty(user)) {
+        return res.status(401).json({ msg: "Authentication failed" });
+      }
+      return res.status(200).json({ balance: user.balance });
+    })
+    .catch((err) => {
+      return res.status(400).json({ error: err });
+    });
+};
+
 module.exports = {
   registerUser,
   loginUser,
+  getBalance,
 };

@@ -6,7 +6,8 @@ import { useAppStatesContext } from "@/contexts/states";
 import axios from "axios";
 
 export default function Home() {
-  const { allPledges, currenLocation, getPledges } = useAppStatesContext();
+  const { allPledges, currenLocation, getPledges, balance } =
+    useAppStatesContext();
   const [ongoings, setOngoings] = useState([]);
 
   useEffect(() => {
@@ -78,6 +79,8 @@ export default function Home() {
         <button className={styles.completePledges} onClick={completePledges}>
           Complete pledges
         </button>
+
+        <div>Balance: {balance}</div>
       </div>
       <div className={styles.ongoingPledges}>
         <div className={styles.title}>Ongoing Pledges</div>
