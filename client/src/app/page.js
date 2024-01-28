@@ -3,9 +3,10 @@ import { useEffect, useState } from "react";
 import OngoingWidget from "../Components/OngoingWidget";
 import styles from "../styles/Home.module.scss";
 import { useAppStatesContext } from "@/contexts/states";
+import axios from "axios";
 
 export default function Home() {
-  const { allPledges } = useAppStatesContext();
+  const { allPledges, currenLocation, getPledges } = useAppStatesContext();
   const [ongoings, setOngoings] = useState([]);
 
   useEffect(() => {
@@ -20,6 +21,45 @@ export default function Home() {
     setOngoings(tmp);
   }, [allPledges]);
 
+  const completePledges = () => {
+    let coordinates = undefined;
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        function (position) {
+          const latitude = position.coords.latitude;
+          const longitude = position.coords.longitude;
+          coordinates = [latitude, longitude];
+        },
+        function (error) {
+          console.log("Error getting geolocation:", error.message);
+        }
+      );
+    } else {
+      console.log("Geolocation is not supported by your browser");
+    }
+
+    const token = localStorage.getItem("token");
+    if (coordinates && token)
+      axios
+        .post(
+          "http://localhost:5001/pledge/check",
+          {
+            // coordinates: coordinates,
+            coordinates: [43.657095, -79.3778373],
+          },
+          {
+            headers: { Authorization: `${token}` },
+          }
+        )
+        .then((res) => {
+          console.log(res);
+          getPledges();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+  };
+
   return (
     <main id={styles.home}>
       <div className={styles.header}>
@@ -32,6 +72,11 @@ export default function Home() {
           }}
         >
           Sign Out
+        </button>
+      </div>
+      <div className={styles.completePledgesWrapper}>
+        <button className={styles.completePledges} onClick={completePledges}>
+          Complete pledges
         </button>
       </div>
       <div className={styles.ongoingPledges}>

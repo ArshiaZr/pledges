@@ -5,30 +5,36 @@ import axios from "axios";
 import { useAppStatesContext } from "@/contexts/states";
 import "react-calendar/dist/Calendar.css";
 import Calendar from "react-calendar";
+import AutoCompleteInput from "./AutoCompleteInput";
 
 export default function AddModal() {
   let { addReveal, setAddReveal, getPledges } = useAppStatesContext();
   const [inputs, setInputs] = useState({});
+  const [coordinates, setCoordinates] = useState([]);
+  const [address, setAddress] = useState("");
 
   const onSubmit = (e) => {
     e.preventDefault();
 
-    let day = inputs.date.getDay().toString().padStart(2, "0");
-    let month = (inputs.date.getMonth() + 1).toString().padStart(2, "0");
-    let year = inputs.date.getFullYear().toString().padStart(2, "0");
+    let theDate = inputs.date;
+    let hour = inputs.time.split(":")[0];
+    let min = inputs.time.split(":")[1];
 
-    let dateDue = `${day}-${month}-${year},` + inputs.time + ":00";
+    theDate = new Date(
+      theDate.getFullYear(),
+      theDate.getMonth(),
+      theDate.getDay(),
+      parseInt(hour),
+      parseInt(min)
+    );
 
-    console.log({
-      title: inputs.title,
-      detail: inputs.detail,
-      amount: inputs.amount,
-      dateDue: dateDue,
-      location: inputs.location,
-      // location: [0, 0],
-      link: inputs.link,
-      priority: inputs.priority,
-    });
+    let day = theDate.getUTCDate().toString().padStart(2, "0");
+    let month = (theDate.getUTCMonth() + 1).toString().padStart(2, "0");
+    let year = theDate.getUTCFullYear().toString().padStart(2, "0");
+    hour = theDate.getUTCHours();
+    min = theDate.getUTCMinutes();
+
+    let dateDue = `${day}-${month}-${year},` + `${hour}:${min}:00`;
 
     axios
       .post(
@@ -38,8 +44,7 @@ export default function AddModal() {
           detail: inputs.detail,
           amount: inputs.amount,
           dateDue: dateDue,
-          location: inputs.location,
-          // location: [0, 0],
+          location: { name: address, type: "Point", coordinates },
           link: inputs.link,
           priority: inputs.priority,
         },
@@ -127,12 +132,9 @@ export default function AddModal() {
           />
         </div>
         <div className={`${styles.locationWrapper} ${styles.box}`}>
-          <input
-            type="text"
-            name="location"
-            placeholder="Enter location"
-            onChange={onChange}
-            className={styles.time}
+          <AutoCompleteInput
+            setCoordinates={setCoordinates}
+            setAddress={setAddress}
           />
           <div className={styles.title}>
             <div className={styles.icon}>

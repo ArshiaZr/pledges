@@ -10,6 +10,7 @@ export function AppStates({ children }) {
   const [editReveal, setEditReveal] = useState(false);
   const [editContent, setEditContent] = useState(false);
   const [allPledges, setAllPledges] = useState([]);
+  const [currentLocation, setCurrentLocation] = useState([]);
 
   const addAlert = ({ message, type, time }) => {
     let tmp = [...alerts];
@@ -56,6 +57,8 @@ export function AppStates({ children }) {
         allPledges,
         setAllPledges,
         getPledges,
+        currentLocation,
+        setCurrentLocation,
       }}
     >
       {children}

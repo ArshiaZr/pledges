@@ -1,4 +1,5 @@
 import styles from "../styles/HistoryWidget.module.scss";
+import { formatDate } from "@/utils/date";
 
 export default function HistoryWidget({ content }) {
   return (
@@ -9,7 +10,9 @@ export default function HistoryWidget({ content }) {
             <div className={styles.title}>{content.title}</div>
             <div className={styles.detail}>{content.detail}</div>
           </div>
-          <div className={styles.date}>{content.date}</div>
+          <div className={styles.date}>
+            {new Date(content.dateDue.toString()).toString()}
+          </div>
           <div className={styles.amount}>${content.amount.toFixed(2)}</div>
         </div>
         <div
@@ -22,7 +25,9 @@ export default function HistoryWidget({ content }) {
       </div>
       <div className={styles.down}>
         <div className={styles.location}>
-          <div className={styles.locationText}>{content.location}</div>
+          <div className={styles.locationText}>
+            {content.location.name.toString()}
+          </div>
           <div className={styles.iconAndTitle}>
             <div className={styles.icon}>
               <img src="/icons/locationIcon.svg" alt="loaction icon" />

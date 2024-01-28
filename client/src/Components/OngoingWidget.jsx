@@ -1,5 +1,6 @@
 import { useAppStatesContext } from "@/contexts/states";
 import styles from "../styles/OngoingWidget.module.scss";
+import { formatDate } from "@/utils/date";
 
 export default function OngoingWidget({ content }) {
   let { setEditContent, setEditReveal } = useAppStatesContext();
@@ -20,7 +21,9 @@ export default function OngoingWidget({ content }) {
             <div className={styles.title}>{content.title}</div>
             <div className={styles.detail}>{content.detail}</div>
           </div>
-          <div className={styles.date}>{content.date}</div>
+          <div className={styles.date}>
+            {new Date(content.dateDue.toString()).toString()}
+          </div>
         </div>
         <div
           className={`${styles.timeLeftWrapper} ${styles.box} ${styles.square}`}
@@ -40,7 +43,9 @@ export default function OngoingWidget({ content }) {
         <div
           className={`${styles.locationWrapper} ${styles.box}  ${styles.square}`}
         >
-          <div className={styles.locationText}>{content.location}</div>
+          <div className={styles.locationText}>
+            {content.location.name.toString()}
+          </div>
           <div className={styles.iconAndTitle}>
             <div className={styles.icon}>
               <img src="/icons/locationIcon.svg" alt="loaction icon" />
