@@ -16,9 +16,8 @@ export default function Register() {
   let onSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:5000/user/register", { inputs })
+      .post("http://localhost:5001/user/register", { ...inputs })
       .then((res) => {
-        console.log(res);
         window.location.replace("/login");
       })
       .catch((err) => {

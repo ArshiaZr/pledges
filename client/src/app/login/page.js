@@ -16,10 +16,9 @@ export default function Login() {
   let onSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:5000/user/login", { inputs })
+      .post("http://localhost:5001/user/login", { ...inputs })
       .then((res) => {
-        console.log(res);
-        localStorage.setItem("token", "token");
+        localStorage.setItem("token", res.data.token);
         window.location.replace("/");
       })
       .catch((err) => {

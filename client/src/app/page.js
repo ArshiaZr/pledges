@@ -1,15 +1,25 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import OngoingWidget from "../Components/OngoingWidget";
 import styles from "../styles/Home.module.scss";
-
-const ongoings = [{}];
+import { useAppStatesContext } from "@/contexts/states";
 
 export default function Home() {
+  const { allPledges } = useAppStatesContext();
+  const [ongoings, setOngoings] = useState([]);
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) window.location.replace("/login");
   }, []);
+  useEffect(() => {
+    let tmp = [];
+    for (let i = 0; i < allPledges.length; i++) {
+      if (!allPledges[i].completed) tmp.push(allPledges[i]);
+    }
+    setOngoings(tmp);
+  }, [allPledges]);
+
   return (
     <main id={styles.home}>
       <div className={styles.header}>
@@ -27,48 +37,9 @@ export default function Home() {
       <div className={styles.ongoingPledges}>
         <div className={styles.title}>Ongoing Pledges</div>
         <div className={styles.wrapper}>
-          <OngoingWidget
-            content={{
-              title: "Zoom Meeting at 2 with Microsoft",
-              detail:
-                "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-              date: "2024-01-29 at 2:00 PM",
-              amount: 10,
-              link: "https://google.com",
-              priority: 2,
-              location: "433 Harlem Ave Toronto, ON",
-            }}
-
-            // key={0}
-          />
-          <OngoingWidget
-            content={{
-              title: "Zoom Meeting at 2 with Microsof",
-              detail:
-                "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-              date: "2024-01-29 at 2:00 PM",
-              amount: 10,
-              link: "https://google.com",
-              priority: 0,
-              location: "433 Harlem Ave Toronto, ON",
-            }}
-
-            // key={0}
-          />
-          <OngoingWidget
-            content={{
-              title: "Zoom Meeting at 2 with Microsof",
-              detail:
-                "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-              date: "2024-01-29 at 2:00 PM",
-              amount: 10,
-              link: "https://google.com",
-              priority: 1,
-              location: "433 Harlem Ave Toronto, ON",
-            }}
-
-            // key={0}
-          />
+          {ongoings.map((each, idx) => {
+            return <OngoingWidget key={each._id} content={each} />;
+          })}
         </div>
       </div>
     </main>

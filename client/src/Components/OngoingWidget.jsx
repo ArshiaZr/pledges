@@ -1,14 +1,16 @@
+import { useAppStatesContext } from "@/contexts/states";
 import styles from "../styles/OngoingWidget.module.scss";
 
 export default function OngoingWidget({ content }) {
+  let { setEditContent, setEditReveal } = useAppStatesContext();
   return (
     <div className={styles.ongoingWidget}>
       <button
         className={styles.editButton}
-        // onClick={() => {
-        //   console.log("edit");
-        //   //TODO: edit
-        // }}
+        onClick={() => {
+          setEditContent(content);
+          setEditReveal(true);
+        }}
       >
         <img src="/icons/editIcon.svg" alt="edit pledge" />
       </button>
