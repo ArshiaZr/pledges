@@ -11,5 +11,6 @@ pledgeRouter.post("/", authMiddleware, pledgeControllers.createPledge);
 pledgeRouter.get("/", authMiddleware, pledgeControllers.getPledges);
 pledgeRouter.put("/:id", authMiddleware, pledgeControllers.editPledge);
 pledgeRouter.delete("/:id", authMiddleware, pledgeControllers.deletePledge);
+pledgeRouter.post("/check", authMiddleware, pledgeControllers.checkPledges);
 
 module.exports = pledgeRouter;

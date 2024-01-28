@@ -1,4 +1,5 @@
 const Pledge = require("../models/pledge");
+const User = require("../models/user");
 
 const createPledge = async (req, res) => {
   let { title, detail, amount, dateDue, location, repeat, priority, link } =
@@ -29,8 +30,21 @@ const createPledge = async (req, res) => {
   }
   amount = parsedAmount;
 
-  if (isEmpty(location)) {
-    return res.status(400).json({ msg: "The location is required" });
+  if (typeof location !== "object") {
+    try {
+      location = JSON.parse(location);
+    } catch (e) {}
+  }
+
+  if (
+    isEmpty(location) ||
+    isEmpty(location.name) ||
+    isEmpty(location.type) ||
+    location.type != "Point" ||
+    isEmpty(location.coordinates) ||
+    location.coordinates.length != 2
+  ) {
+    return res.status(400).json({ msg: "The location is not valid" });
   }
 
   let parsedPriority = parseInt(priority);
@@ -113,17 +127,15 @@ const createPledge = async (req, res) => {
     });
   }
 
-  dateDue = Date.parse(
-    `${date[2].toString().padStart(4, "0")}-${date[1]
-      .toString()
-      .padStart(2, "0")}-${date[0].toString().padStart(2, "0")}T${time[0]
-      .toString()
-      .padStart(2, "0")}:${time[1].toString().padStart(2, "0")}:${time[0]
-      .toString()
-      .padStart(2, "0")}`
+  dateDue = Date.UTC(
+    date[2].toString().padStart(4, "0"),
+    date[1].toString().padStart(2, "0"),
+    date[0].toString().padStart(2, "0"),
+    time[0].toString().padStart(2, "0"),
+    time[1].toString().padStart(2, "0")
   );
 
-  if (dateDue <= new Date().getTime()) {
+  if (dateDue <= new Date().getUTCDate()) {
     return res.status(400).json({
       msg: "The date or time is invalid",
     });
@@ -151,7 +163,6 @@ const createPledge = async (req, res) => {
       return res.status(200).json({ pledge: added });
     })
     .catch((err) => {
-      console.log(err);
       return res.status(400).json({ msg: err });
     });
 };
@@ -241,14 +252,12 @@ const editPledge = async (req, res) => {
           return res.status(200).json({ pledge: newOne });
         })
         .catch((err) => {
-          console.log(err);
           return res.status(400).json({
             msg: err,
           });
         });
     })
     .catch((err) => {
-      console.log(err);
       return res.status(400).json({
         msg: err,
       });
@@ -290,9 +299,66 @@ const deletePledge = async (req, res) => {
     });
 };
 
+const checkPledges = async (req, res) => {
+  //MongoDB supports geospatial queries.
+  //You can use $geoNear, $near, or $nearSphere operators to find documents within a certain distance
+  //from a point.
+  //Find these documents, update them to be completed, if time due is valid
+
+  //30 minutes before, 5 minutes after is valid
+
+  const { coordinates } = req.body;
+  let currentDate = new Date();
+  let fiveMinutesAgo = new Date(currentDate);
+  fiveMinutesAgo.setMinutes(fiveMinutesAgo.getMinutes() - 5);
+
+  let thirtyMinutesLater = new Date(currentDate);
+  thirtyMinutesLater.setMinutes(thirtyMinutesLater.getMinutes() + 30);
+
+  const userId = req._id;
+  const user = await User.findById(userId);
+
+  //any pledge that was due fiveMinutes ago and not completed
+  //must be set to false success
+  await Pledge.updateMany(
+    { user: userId, completed: false, dateDue: { $lte: fiveMinutesAgo } },
+    { completed: true, success: false }
+  );
+
+  //collect any pledge that is nearby
+  const pledges = await Pledge.find({
+    user: userId,
+    completed: false,
+    dateDue: { $gte: thirtyMinutesLater },
+    location: {
+      $near: {
+        $geometry: {
+          type: "Point",
+          coordinates: coordinates, // [longitude, latitude]
+        },
+        $maxDistance: 500, // distance in meters
+      },
+    },
+  });
+
+  let total = 0;
+  for (let pledge of pledges) {
+    pledge.success = true;
+    pledge.completed = true;
+    total += pledge.amount;
+    // Save the updated user and pledge
+    await pledge.save();
+  }
+  user.balance += total;
+  await user.save();
+
+  res.status(200).json({ msg: "updated pledges" });
+};
+
 module.exports = {
   createPledge,
   getPledges,
   editPledge,
   deletePledge,
+  checkPledges,
 };
