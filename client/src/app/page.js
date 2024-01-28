@@ -1,26 +1,28 @@
+"use client";
+import { useEffect } from "react";
 import OngoingWidget from "../Components/OngoingWidget";
 import styles from "../styles/Home.module.scss";
-import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
 
 const ongoings = [{}];
 
-function checkToken() {
-  const cookieStore = cookies();
-  const token = cookieStore.get("token");
-  console.log(token);
-  if (!token) {
-    redirect("/login");
-  }
-}
-
 export default function Home() {
-  checkToken();
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) window.location.replace("/login");
+  }, []);
   return (
     <main id={styles.home}>
       <div className={styles.header}>
         <div className={styles.localTime}>Friday, Sat Jan 27</div>
-        <button className={styles.singOutButton}>Sign Out</button>
+        <button
+          className={styles.singOutButton}
+          onClick={() => {
+            localStorage.removeItem("token");
+            window.location.replace("/login");
+          }}
+        >
+          Sign Out
+        </button>
       </div>
       <div className={styles.ongoingPledges}>
         <div className={styles.title}>Ongoing Pledges</div>

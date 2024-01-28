@@ -19,6 +19,7 @@ export default function Login() {
       .post("http://localhost:5000/user/login", { inputs })
       .then((res) => {
         console.log(res);
+        localStorage.setItem("token", "token");
         window.location.replace("/");
       })
       .catch((err) => {

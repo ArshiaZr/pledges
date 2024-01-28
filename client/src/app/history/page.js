@@ -1,19 +1,13 @@
+"use client";
+import { useEffect } from "react";
 import HistoryWidget from "../../Components/HistoryWidget";
 import styles from "../../styles/History.module.scss";
-import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
-
-function checkToken() {
-  const cookieStore = cookies();
-  const token = cookieStore.get("token");
-  console.log(token);
-  if (!token) {
-    redirect("/login");
-  }
-}
 
 export default function History() {
-  checkToken();
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) window.location.replace("/login");
+  }, []);
   return (
     <main id={styles.history}>
       <div className={styles.ongoingPledges}>

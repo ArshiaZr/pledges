@@ -19,7 +19,7 @@ export default function Register() {
       .post("http://localhost:5000/user/register", { inputs })
       .then((res) => {
         console.log(res);
-        window.location.replace("/");
+        window.location.replace("/login");
       })
       .catch((err) => {
         console.log(err);
