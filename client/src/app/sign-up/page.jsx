@@ -1,13 +1,31 @@
-'use client'; 
-import React, { useState } from 'react';
+'use client';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { redirect } from 'next/navigation';
+// import { redirect } from 'react-router-dom';
 
 export default function SignUp() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [rdr, setRdr] = useState(false)
 
-    async function handleSignUp() {
+  useEffect({
+    if(rdr){
+      redirect('/')
+    }
+  }[rdr])
+
+  async function handleSignUp() {
     // do api req for sign 
-    };
+    // do api req for sign 
+    axios.post("http://localhost:5000/user/register", {username, password}).then((res)=>{
+      console.log(res)
+      setRdr(true)
+    }).catch((err)=>{
+      console.log(err);
+    })
+
+  };
 
   return (
     <div className="h-screen w-screen flex items-center justify-center">

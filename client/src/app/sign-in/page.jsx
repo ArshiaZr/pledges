@@ -6,6 +6,14 @@ export default function SignIn() {
     const [password, setPassword] = useState(null);
 
     async function handleSignIn() {
+        const response = await fetch("localhost:3000/user/", {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email, password }),
+          });
+    
         // do api req for sign 
     };
 
