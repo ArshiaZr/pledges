@@ -16,7 +16,23 @@ db.once("open", () => {
   console.log("Database connected");
 });
 
-app.use(cors());
+// Enable CORS for the specified origin
+const allowedOrigins = [
+  'http://localhost:3000/'  // For development purposes
+];
+
+const corsOptions = {
+  credentials: true,
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  }
+};
+
+app.use(cors({ origin: 'http://localhost:3000' }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("dist"));

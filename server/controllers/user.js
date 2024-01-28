@@ -11,7 +11,7 @@ const { genPassword, validatePassword, issueJWT } = require(path.join(
 
 const registerUser = async (req, res) => {
   let { username, password } = req.body;
-
+  console.log('tf goin on')
   // TODO: input validation
 
   username = username.toLowerCase();
