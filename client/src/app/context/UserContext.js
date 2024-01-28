@@ -6,7 +6,6 @@ const userData = createContext();
 // TODO: need to reset trip data context between trip creations
 export const userDataProvider = ({ children }) => {
   const [userData, setUserData] = useState({
-    
   });
 
   return (
