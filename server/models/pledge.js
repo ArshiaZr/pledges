@@ -12,7 +12,17 @@ const PledgeSchema = new Schema({
   dateDue: Date,
   dateCreated: Date,
   dateUpdated: Date,
-  location: String,
+  location: {
+    type: {
+      type: String, // Don't do `{ location: { type: String } }`
+      enum: ["Point"], // 'location.type' must be 'Point'
+      required: true,
+    },
+    coordinates: {
+      type: [Number],
+      required: true,
+    },
+  },
   repeat: String,
   link: String,
   priority: {
@@ -23,6 +33,8 @@ const PledgeSchema = new Schema({
   completed: Boolean,
   success: Boolean,
 });
+
+PledgeSchema.index({ location: "2dsphere" });
 
 const Pledge = model("Pledge", PledgeSchema);
 module.exports = Pledge;

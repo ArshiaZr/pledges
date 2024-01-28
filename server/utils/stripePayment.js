@@ -14,7 +14,7 @@ const stripePayment = async (req, res) => {
     });
 
     //also increment user's balance
-    const userId = req.body._id;
+    const userId = req._id;
     const user = await User.findByIdAndUpdate(
       userId,
       { $inc: { balance: amount } },
