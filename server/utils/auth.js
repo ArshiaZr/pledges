@@ -27,6 +27,7 @@ function authMiddleware(req, res, next) {
         algorithms: ["RS256"],
       });
       req.jwt = verification;
+      req._id = req.jwt.sub;
       next();
     } catch (err) {
       return res.status(401).json({ msg: "Access denied" });
