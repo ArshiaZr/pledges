@@ -281,9 +281,64 @@ const deletePledge = async (req, res) => {
     });
 };
 
+
+
+const checkPledges = async (req, res) => {
+  //MongoDB supports geospatial queries.
+  //You can use $geoNear, $near, or $nearSphere operators to find documents within a certain distance
+  //from a point.
+  //Find these documents, update them to be completed, if time due is valid
+
+  //20 minutes before, 5 minutes after is valid
+
+  const { userLocation } = req.body;
+  const currentDate = new Date();
+  const fiveMinutesAgo = new Date(currentDate.getTime() - 5 * 60 * 1000);
+  const thirtyMinutesLater = new Date(currentDate.getTime() + 30 * 60 * 1000);
+
+  const userId = req._id;
+  const user = await User.findById(userId);
+  //any pledge that was due fiveMinutes ago and not completed
+  //must be set to false success
+  await Pledge.updateMany(
+    { user: userId, completed: false, dateDue: { $lte: fiveMinutesAgo } },
+    { completed: true, success: false }
+  );
+
+  //collect any pledge that is nearby
+  const pledges = await Pledge.find({
+    user: userId,
+    completed: false,
+    dateDue: { $lte: thirtyMinutesLater },
+    location: {
+      $near: {
+        $geometry: {
+          type: "Point",
+          coordinates: userLocation, // [longitude, latitude]
+        },
+        $maxDistance: 50, // distance in meters
+      },
+    },
+  });
+
+  let total = 0;
+  for (let pledge of pledges) {
+    pledge.success = true;
+    pledge.completed = true;
+    total += pledge.amount;
+    // Save the updated user and pledge
+    await pledge.save();
+  }
+  user.balance += total;
+  await user.save();
+
+  res.status(200).json("updated pledges");
+};
+
 module.exports = {
   createPledge,
   getPledges,
   editPledge,
   deletePledge,
+  checkPledges,
 };

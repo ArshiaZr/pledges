@@ -7,6 +7,7 @@ const middleware = require("./utils/middleware");
 const pledgeRouter = require("./routes/pledge");
 const userRouter = require("./routes/user");
 require("dotenv").config();
+const stripePayment = require("./utils/stripePayment");
 
 const db_url = process.env.MONGODB_URI;
 mongoose.connect(db_url);
@@ -36,6 +37,8 @@ app.use(cors({ origin: 'http://localhost:3000' }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("dist"));
+
+app.post("/create-payment-intent", stripePayment);
 
 app.use("/pledge", pledgeRouter);
 app.use("/user", userRouter);
