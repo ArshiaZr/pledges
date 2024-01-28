@@ -1,0 +1,104 @@
+#register {
+  padding: 8rem 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #1a1d1f;
+
+  .wrapper {
+    min-width: 20rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    background: rgba(242, 242, 242, 0.08);
+    border-radius: 25px;
+    padding: 2rem 1rem;
+
+    .title {
+      color: var(--white1);
+      text-align: center;
+      font-size: 2rem;
+      font-style: normal;
+      font-weight: 500;
+      line-height: normal;
+    }
+    .form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+
+      .inputWrapper {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        border-radius: 25px;
+        background: rgba(26, 29, 31, 0.8);
+        padding-right: 0.75rem;
+
+        input {
+          width: 100%;
+          border: none;
+          background: transparent;
+          padding: 0.5rem 1rem;
+          font-size: 0.8rem;
+          color: var(--white1);
+          &::placeholder {
+            text-transform: capitalize;
+          }
+        }
+
+        .icon {
+          position: relative;
+          width: 1rem;
+          aspect-ratio: 1 / 1;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+          }
+
+          &.lock {
+            img {
+              &:first-child {
+                opacity: 1;
+              }
+              &:last-child {
+                opacity: 0;
+              }
+            }
+          }
+
+          &.reveal {
+            img {
+              &:first-child {
+                opacity: 0;
+              }
+              &:last-child {
+                opacity: 1;
+              }
+            }
+          }
+        }
+      }
+
+      .submitButton {
+        margin-top: 1rem;
+        width: 100%;
+        background-color: var(--blue);
+        border-radius: 40px;
+        padding: 0.5rem;
+
+        font-size: 1rem;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+      }
+    }
+  }
+}

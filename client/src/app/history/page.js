@@ -1,7 +1,19 @@
 import HistoryWidget from "../../Components/HistoryWidget";
 import styles from "../../styles/History.module.scss";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+
+function checkToken() {
+  const cookieStore = cookies();
+  const token = cookieStore.get("token");
+  console.log(token);
+  if (!token) {
+    redirect("/login");
+  }
+}
 
 export default function History() {
+  checkToken();
   return (
     <main id={styles.history}>
       <div className={styles.ongoingPledges}>
@@ -17,6 +29,7 @@ export default function History() {
               link: "https://google.com",
               priority: 0,
               location: "433 Harlem Ave Toronto, ON",
+              success: false,
             }}
 
             // key={0}
@@ -28,9 +41,10 @@ export default function History() {
                 "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
               date: "2024-01-29 at 2:00 PM",
               amount: 10,
-              link: "https://google.com",
+              link: "",
               priority: 0,
               location: "433 Harlem Ave Toronto, ON",
+              success: true,
             }}
 
             // key={0}

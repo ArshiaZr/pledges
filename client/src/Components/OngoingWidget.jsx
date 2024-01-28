@@ -49,9 +49,12 @@ export default function OngoingWidget({ content }) {
         <a
           href={content.link}
           target="__blank"
-          className={`${styles.linkWrapper} ${styles.box}  ${styles.square}`}
+          className={`${styles.linkWrapper}  ${styles.box}  ${styles.square} ${
+            content.link ? styles.active : ""
+          }`}
         >
           <div className={styles.icon}>
+            <img src="/icons/linkIconGray.svg" alt="link icon" />
             <img src="/icons/linkIcon.svg" alt="link icon" />
           </div>
           <div className={styles.title}>Link</div>
@@ -67,7 +70,9 @@ export default function OngoingWidget({ content }) {
               : styles.high
           }`}
         >
-          <div className={styles.icon}>
+          <div className={`${styles.icon}`}>
+            <img src="/icons/priorityIconGray.svg" alt="priority icon" />
+            <img src="/icons/priorityIconBlue.svg" alt="priority icon" />
             <img src="/icons/priorityIcon.svg" alt="priority icon" />
           </div>
           <div className={styles.title}>Priority</div>

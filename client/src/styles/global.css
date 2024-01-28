@@ -58,3 +58,8 @@ h5,
 h6 {
   font-family: var(--primary-font), sans-serif;
 }
+
+textarea:focus,
+input:focus {
+  outline: none;
+}
