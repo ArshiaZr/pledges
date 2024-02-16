@@ -10,7 +10,7 @@ PledgePath empowers individuals to take control of their goals and transform asp
 
 ## Demo
 
-<img src="demo.gif" width="400" height="400"/>
+<img src="demo.gif" width="232.67" height="498.67"/>
 
 ## Getting Started
 
