@@ -1,4 +1,4 @@
-# PledgePath 
+# PledgePath (Hackathon Project)
 
 ## Introduction
 
