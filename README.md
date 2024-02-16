@@ -10,7 +10,7 @@ PledgePath empowers individuals to take control of their goals and transform asp
 
 ## Demo
 
-![PledgePath Demo](demo.gif)
+<img src="demo.gif" width="400" height="400"/>
 
 ## Getting Started
 
