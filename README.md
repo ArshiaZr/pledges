@@ -13,6 +13,7 @@ PledgePath empowers individuals to take control of their goals and transform asp
 <div style="display: flex; justify-content: center;">
   <img src="demo.gif" style="object-fit:contain;" width="232" height="498"/>
 </div>
+
 ## Getting Started
 
 ### Server Side
